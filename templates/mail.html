@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ввод кода из почты</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      width: 400px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Ввод кода из почты</h2>
+        <form action="/mail" method="post">
+          <div class="form-group">
+
+            <input type="text" class="form-control" id="code" placeholder="Введите код" name = "code">
+          </div>
+          <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

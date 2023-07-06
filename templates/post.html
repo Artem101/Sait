@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="{{  description  }}">
+    <meta name="keywords" content="Форум , пост, ворлдикто, программирование ,айти форум">
+    <meta property="og:image" content="https://wolditco.ru/favicon2.png">
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/codehilite.css"/>
+    <title>{{ title }} - {{ id }}</title>
+    <style>
+    body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+            font-family: Arial, sans-serif;
+        }
+
+    h1 {
+        font-size: 5rem;
+        margin-top: 10vh;
+        text-align: center;
+        color: #3A3A3A;
+        text-shadow: 2px 2px #C4C4C4;
+        animation: title-animation 2s ease-in-out infinite;
+    }
+
+    @keyframes title-animation {
+        0% {transform: scale(1);}
+        50% {transform: scale(1.1);}
+        100% {transform: scale(1);}
+    }
+
+    table {
+        min-width: 60%;
+        width: auto;
+        height: 40%;
+        box-shadow: 0px 0px 10px #C4C4C4;
+        overflow: hidden;
+        animation: table-animation 2s ease-in-out forwards;
+    }
+
+    @keyframes table-animation {
+        0% {opacity: 0; transform: translateY(-100px);}
+        100% {opacity: 1; transform: translateY(0);}
+    }
+
+    td {
+        padding: 20px;
+        text-align: left;
+        font-size: 2rem;
+        vertical-align: top; /* выравнивание текста по верхней грани */
+        word-wrap: break-word; /* перенос слов, которые не помещаются в td */
+    }
+
+
+    .stats {
+        margin-top: 20px; /* добавляем отступ сверху */
+        font-size: 1.5rem; /* уменьшаем размер текста для статистики */
+        color: #5C5C5C; /* меняем цвет текста на серый */
+        display: flex;
+        flex-wrap: wrap; /* разрешаем перенос элементов на новую строку */
+        align-items: center;
+        animation: stats-animation 2s ease-in-out forwards;
+    }
+
+    @media screen and (max-width: 768px) {
+      /* при ширине экрана < 768px уменьшаем размер шрифта для статистики */
+      .stats {
+        font-size: 1rem;
+      }
+    }
+
+
+    .like-btn {
+        margin-right: 10px;
+        cursor: pointer;
+        font-size: 2rem;
+        color: #4CAF50;
+        animation: like-btn-animation 2s ease-in-out infinite;
+    }
+
+    @keyframes like-btn-animation {
+        0% {transform: rotate(0deg);}
+        50% {transform: rotate(10deg);}
+        100% {transform: rotate(0deg);}
+    }
+
+    .like-count {
+        font-size: 2rem;
+        color: #4CAF50;
+    }
+
+
+
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <table class="border-2 border-primary rounded-2">
+        <tr>
+            <td>{{text|safe}}</td>
+        </tr>
+    </table>
+    <div class="stats">
+        <form action="/like_post/{{ id }}" method="POST">
+            <button type="submit" class="btn btn-success like-btn">&#128077;</button>
+        </form>
+        <div class="stats">Лайки: {{ likes }} | Просмотры: {{ views }}</div>
+    </div>
+    <div class="comments mt-4">
+    <h2>Комментарии:</h2>
+    <form action="/add_comment/{{ id }}" method="POST">
+        <textarea name="comment" class="form-control mb-2"></textarea>
+        <button type="submit" class="btn btn-primary">Добавить комментарий</button>
+    </form>
+    </div>
+
+        {% if comments %}
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Комментарии</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for comment in comments %}
+                    <a href="/forum" class="btn btn-secondary mb-3">Вернуться на форум</a>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-0">{{ comment.author }}</h5>
+                                <small class="text-muted">{{ comment.date }}</small>
+                            </div>
+                        </div>
+                        <p class="mb-0 mt-2">{{ comment.text|safe}}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>Пока нет комментариев.</p>
+    {% endif %}
+
+
+
+   <form action="/forum">
+        <button class="btn back-btn btn-outline-primary mt-4">Назад на форум</button>
+   </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+ </body>
+</html>
